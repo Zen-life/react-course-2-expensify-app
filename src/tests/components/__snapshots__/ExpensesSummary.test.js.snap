@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Viewing 0 expense totalling 0.00, should return 1`] = `
+<div>
+  <p>
+    Viewing 
+    0
+     expense totalling 
+    0.00
+  </p>
+</div>
+`;
+
+exports[`Viewing 1 expense totalling 1.95, should return 1`] = `
+<div>
+  <p>
+    Viewing 
+    1
+     expense totalling 
+    1.95
+  </p>
+</div>
+`;
+
+exports[`Viewing 3 expenses totalling 1141.95, should return 1`] = `
+<div>
+  <p>
+    Viewing 
+    3
+     expenses totalling 
+    1,141.95
+  </p>
+</div>
+`;
