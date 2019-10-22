@@ -9,6 +9,9 @@ import getVisibleExpenses from './selectors/expenses';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
 import 'react-dates/lib/css/_datepicker.css';
+import './firebase/firebase';
+
+
 
 // the 'const store' has been set up to the configureStore func imported above, 
 // which has the 'exported default' store codes returned. Giving acces to store.getState()
