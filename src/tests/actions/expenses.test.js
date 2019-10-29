@@ -1,11 +1,21 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import {startAddExpense, addExpense, editExpense, removeExpense} from '../../actions/expenses';
+import {startAddExpense, addExpense, editExpense, removeExpense, setExpenses, startSetExpenses} from '../../actions/expenses';
 import expenses from '../fixtures/expenses';
 import database from '../../firebase/firebase';
 
 // enable mock store const to be called by any test that needs it
 const createMockStore = configureMockStore([thunk]);
+
+// this will run before each test case. so the last data 
+// in th dbse is the last test case that run
+beforeEach((done) => {
+    const expensesData = {};
+        expenses.forEach(({ id, description, note, amount, createdAt }) => {
+            expensesData[id] = { description, note, amount, createdAt };
+        });    
+    database.ref('expenses').set(expensesData).then(() => done());
+});
 
 // the functions are in file imported above. So just call it in test
 test('should setup remove expense action object', () => {
@@ -18,8 +28,7 @@ test('should setup remove expense action object', () => {
 
 //test case for editExpense
 test('should setup edit expense action object', () => {
-    const
-     action = editExpense('123abc', { note: 'New note value' });
+    const action = editExpense('123abc', { note: 'New note value' });
     expect(action).toEqual({
         type: 'EDIT_EXPENSE',
         id: '123abc',
@@ -71,6 +80,7 @@ test('Should add expense to database and store', (done) => {
     });
 });
 
+// testing with async operation Promise is used to check sync before certian codes run
 test('Should add expense with default data to database and store', (done) => {
     const store = createMockStore({});
     const expenseDefault = {
@@ -99,19 +109,25 @@ test('Should add expense with default data to database and store', (done) => {
     });
 });
 
-// test('should setup the add expense action object with default values', () => {
-//     const expenseData = {
-       
-//     } 
-//     const action = addExpense();
-//     expect(action).toEqual({
-//         type: 'ADD_EXPENSE',
-//         expense: {
-//             id: expect.any(String),
-//             description:'', 
-//             note: '', 
-//             amount: 0, 
-//             createdAt: 0            
-//         }
-//     })
-// });
+test('should setup set expenses action object with data', () => {
+ const action = setExpenses(expenses);
+ expect(action).toEqual({
+     type: 'SET_EXPENSES',
+     expenses
+ });
+});
+
+// the dispatch goes and fetch the dummy data setup right above at beforeEach
+// then() waits for the data to be fetched before it fires it codes within
+// 'done' in the test ensure jest doesn't pass of fail the test until done is called
+test('should fetch the expenses from firebase ', (done) => {
+    const store = createMockStore({});
+    store.dispatch(startSetExpenses()).then(() => {
+        const actions = store.getActions(); // should be only one action
+        expect(actions[0]).toEqual({
+            type: 'SET_EXPENSES',
+            expenses
+        }); // expect first and only action to be SET_EXPENSES and the expense(s) it has
+        done(); // call done() to fire as we've finished.
+    });
+});
