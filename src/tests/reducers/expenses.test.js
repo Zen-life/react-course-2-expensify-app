@@ -65,12 +65,3 @@ test('should not edit an expense, if expense not found', () => {
     const state = expensesReducer(expenses, action);
     expect(state).toEqual(expenses);
 });
-
-test('should set expenses', () => {
-    const action = {
-        type: 'SET_EXPENSES',
-        expenses: [expenses[1]]
-    }; // set only one expense data in array, expesnes[1]
-    const state = expensesReducer(expenses, action); // call reducer with new expenses, all
-    expect(state).toEqual([expenses[1]]); // but only expect expenses[1] to return per action
-});
