@@ -23,6 +23,7 @@ export const startAddExpense = (expenseData = {}) => {
         } = expenseData;
         const expense = {description, note, amount, createdAt};
 
+        // Save data entered with push()
         // 'then' returns a ref, so we can get the id from it. 
         // then spread the rest of the properties that comes back
         // the return helps to chain another then promise to it in the test file
