@@ -8,12 +8,11 @@ export const addExpense = (expense) => ({
     expense
 });
 
-
+// the return function only works due to the middleware installed
+// the function is called internally by redux and gets called with dispatch
+// the code inside the return will save data to firebase & afterwards 
+// firebase dispatch to start addExpense so the data is reflected what is in firebase
 export const startAddExpense = (expenseData = {}) => {
-    // the return function only works due to the middleware installed
-    // the function is called internally by redux and gets called with dispatch
-    // the code inside the return will save data to firebase & afterwards 
-    // fire dispatch to to start addExpense so the data is reflected what is in firebase
     return (dispatch) => {
         const {
             description = '', 
@@ -47,3 +46,34 @@ export const editExpense = (id, updates) => ({
     id,
     updates
 });
+
+// setExpenses
+export const setExpenses = (expenses) => ({
+  type: 'SET_EXPENSES',
+  expenses  
+});
+
+// the return function only works due to the middleware installed
+// the function is called internally by redux and gets called with dispatch
+// the code inside the return will save data to firebase & afterwards 
+// firebase dispatch to start setExpenses so the data is reflected what is in firebase
+export const startSetExpenses = () => {
+    return (dispatch) => { 
+        // 'then' returns a snapshot, so we can get the id from it. 
+        // then spread the rest of the properties that comes back
+        // the return helps to chain another then promise to it in the test file       
+        return database.ref('expenses').once('value').then((snapshot) => {
+        const expenses = []; // array to accept data from the object list
+        
+        // childSnapshot can be called anything. snapshot is called once for each child (expense)
+        snapshot.forEach((childSnapshot) => {
+        expenses.push({
+            id: childSnapshot.key,
+            ...childSnapshot.val()
+        });
+        });
+
+        dispatch(setExpenses(expenses));        
+        });
+    };    
+};
