@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ExpenseForm from './ExpenseForm';
-import { editExpense, removeExpense } from '../actions/expenses';
+import { editExpense, startRemoveExpense } from '../actions/expenses';
 
 export class EditExpensePage extends React.Component {
  
@@ -11,7 +11,7 @@ export class EditExpensePage extends React.Component {
     };
 
     onRemove = () => {
-        this.props.removeExpense({ id: this.props.expense.id });
+        this.props.startRemoveExpense({ id: this.props.expense.id });
         this.props.history.push('/');
     };
     render() {
@@ -42,11 +42,11 @@ const mapStateToProps = (state, props) => {
 
     // the goal is to return an object
     // inside return, we can define various props to call dispatch
-    // the props is required (according to Insctructor) to pass data returned by the Object in the removeExpense() above
+    // the props is required (according to Insctructor) to pass data returned by the Object in the startRemoveExpense() above
     // Although my test showed it works fine without the passing id and expense.
 const mapDispatchToProps = (dispatch, props) => ({
     editExpense: (id, expense) => dispatch(editExpense(id, expense)),
-    removeExpense: (data) => dispatch(removeExpense(data))
+    startRemoveExpense: (data) => dispatch(startRemoveExpense(data))
 });
 
 

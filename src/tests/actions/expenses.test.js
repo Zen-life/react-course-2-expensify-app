@@ -1,6 +1,6 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import {startAddExpense, addExpense, editExpense, removeExpense, setExpenses, startSetExpenses} from '../../actions/expenses';
+import {startAddExpense, addExpense, editExpense, removeExpense, startRemoveExpense, setExpenses, startSetExpenses} from '../../actions/expenses';
 import expenses from '../fixtures/expenses';
 import database from '../../firebase/firebase';
 
@@ -28,6 +28,24 @@ test('should setup remove expense action object', () => {
         id: '123abc'
     });
 });
+
+test('should remove expenses from firebase', (done) => {
+    const store = createMockStore({});
+    const id = expenses[0].id;
+    store.dispatch(startRemoveExpense({ id })).then(() => {
+        const actions = store.getActions();
+        expect(actions[0]).toEqual({ 
+            type: 'REMOVE_EXPENSE',
+            id 
+        });
+        return database.ref(`expenses/${id}`).once('value');
+    }).then((snapshot) => {
+        // snapsshot returns null when it try's to fetch data that does not exist
+        expect(snapshot.val()).toBeFalsy(); // or toBe(null)
+        done(); // done() moved here from below as then() in this code is async also
+    });
+});
+
 
 //test case for editExpense
 test('should setup edit expense action object', () => {
@@ -78,7 +96,7 @@ test('Should add expense to database and store', (done) => {
         done(); // done() moved here from below as then() in this code is async also
     }); 
 });
-// using 'done' tells jest the test is async, otherwise it will run before the expect
+// using 'done' tells jest the test is async, otherwise it will run before the 'expect'
 // and possible pass if the code has no errors, though it will not check expect due to async
 // when done is added as argu above, the test is not considered passed or failed until done() is called 
 

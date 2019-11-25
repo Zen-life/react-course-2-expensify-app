@@ -37,9 +37,9 @@ export { firebase, database as default };
 //   console.log(snapshot.key, snapshot.val());
 // });
 
-// try out new subscriber event codes 'child_changed' similar to 'value'
-// the child_added works alittle differently. It will fire for 
-// items already in the database and fire again each it new item is added
+// try out new subscriber event codes 'child_added' similar to 'value'
+// the child_added works a little differently. It will fire for 
+// items already in the database and fire again each time new item is added
 // database.ref('expenses').on('child_added', (snapshot) => {
 //   console.log(snapshot.key, snapshot.val());
 // });
