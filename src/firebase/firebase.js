@@ -109,7 +109,7 @@ export { firebase, database as default };
 
 // Fetching data from firebase database
 
-// setup dub to output name, job title and company
+// setup data dump to output name, job title and company
 //  const OnMemVavlueChange = database.ref().on('value', (snapshot) => {
 //      const data = snapshot.val();
 //      // console.log('data dump', data); // used to check the data dump

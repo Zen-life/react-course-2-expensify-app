@@ -43,7 +43,6 @@ export const removeExpense = ({ id } = {}) => ({
 
 // start REMOVE_EXPENSES
 export const startRemoveExpense = ({ id } = {}) => {
-    const expense = { id };
     return (dispatch) => {
         return database.ref(`expenses/${id}`).remove().then(() => {            
             dispatch(removeExpense({ id }));                 
@@ -57,6 +56,15 @@ export const editExpense = (id, updates) => ({
     id,
     updates
 });
+
+// start edit expense - enables the edits to be stored in firebase
+export const startEditExpense = (id, updates) => {
+    return (dispatch) => {
+        return database.ref(`expenses/${id}`).update(updates).then(() => {                       
+            dispatch(editExpense(id, updates));
+        });
+    };
+};
 
 // setExpenses
 export const setExpenses = (expenses) => ({
