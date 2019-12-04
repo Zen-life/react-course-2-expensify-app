@@ -1,9 +1,10 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
 import expensesReducer from '../reducers/expenses';
 import filtersReducer from '../reducers/filters';
-import thunk from 'redux-thunk';
+import authReducer from '../reducers/auth';
 
-// if REDUX.. is available use it, else use compose
+// if redux is available use it, else use compose
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 // wrapping the store code inside the 'export default' and returning 'store' means that
@@ -13,7 +14,8 @@ export default () => {
     const store = createStore(
         combineReducers({
             expenses: expensesReducer,
-            filters: filtersReducer
+            filters: filtersReducer,
+            auth: authReducer
         }),
         composeEnhancers(applyMiddleware(thunk))
     );
