@@ -5,12 +5,11 @@ import { startLogout } from '../actions/auth';
 
 export const Header = ({ startLogout }) => (
     // this is a regular html5 header tag
+    //  exact={true} is del as no longer linking to the root '/'
     <header>
     <h1>Expensify</h1>
-    <NavLink to="/" activeClassName="is-active" exact={true}>Login</NavLink>
-    <NavLink to="/dashboard" activeClassName="is-active">Home</NavLink>
+    <NavLink to="/dashboard" activeClassName="is-active">Dashboard</NavLink>
     <NavLink to="/create" activeClassName="is-active">Create Expense</NavLink>
-    <NavLink to="/help" activeClassName="is-active">Help</NavLink>
     <button onClick={startLogout}>Logout</button>
     </header>
 );
