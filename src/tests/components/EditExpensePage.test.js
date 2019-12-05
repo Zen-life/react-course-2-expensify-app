@@ -25,12 +25,12 @@ test('should render Edit Expense Page correctly', () => {
 
 test('should handle startEditExpense', () => {
     wrapper.find('ExpenseForm').prop('onSubmit')(expenses[2]); // () calling with data that gets passed.
-    expect(history.push).toHaveBeenLastCalledWith('/'); // now if history.push path alters in EditExpensePage, test will fail 
+    expect(history.push).toHaveBeenLastCalledWith('/dashboard'); // now if history.push path alters in EditExpensePage, test will fail 
     expect(startEditExpense).toHaveBeenLastCalledWith(expenses[2].id, expenses[2]); // called with data parsed onSubmit above
 });
 
 test('should handle startRemoveExpense', () => {
     wrapper.find('button').simulate('click');
-    expect(history.push).toHaveBeenLastCalledWith('/'); // now if history.push path alters in AddExpensePage, test will fail 
+    expect(history.push).toHaveBeenLastCalledWith('/dashboard'); // now if history.push path alters in AddExpensePage, test will fail 
     expect(startRemoveExpense).toHaveBeenLastCalledWith({id: expenses[2].id}); // called with data parsed onSubmit above
 });

@@ -12,8 +12,10 @@ export const addExpense = (expense) => ({
 // the function is called internally by redux and gets called with dispatch
 // the code inside the return will save data to firebase & afterwards 
 // firebase dispatch to start addExpense so the data is reflected what is in firebase
+// async action gets called with dispatch as well as getState. therefore, acess to state e.g. uid
 export const startAddExpense = (expenseData = {}) => {
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        const uid = getState().auth.uid; // get user ID from state
         const {
             description = '', 
             note = '', 
@@ -26,7 +28,7 @@ export const startAddExpense = (expenseData = {}) => {
         // 'then' returns a ref, so we can get the id from it. 
         // then spread the rest of the properties that comes back
         // the return helps to chain another then promise to it in the test file
-        return database.ref('expenses').push(expense).then((ref) => {
+        return database.ref(`user/${uid}/expenses`).push(expense).then((ref) => {
             dispatch(addExpense({
                 id: ref.key,
                 ...expense
@@ -43,8 +45,9 @@ export const removeExpense = ({ id } = {}) => ({
 
 // start REMOVE_EXPENSES
 export const startRemoveExpense = ({ id } = {}) => {
-    return (dispatch) => {
-        return database.ref(`expenses/${id}`).remove().then(() => {            
+    return (dispatch, getState) => {
+        const uid = getState().auth.uid;
+        return database.ref(`user/${uid}/expenses/${id}`).remove().then(() => {            
             dispatch(removeExpense({ id }));                 
         });
     };
@@ -59,8 +62,9 @@ export const editExpense = (id, updates) => ({
 
 // start edit expense - enables the edits to be stored in firebase
 export const startEditExpense = (id, updates) => {
-    return (dispatch) => {
-        return database.ref(`expenses/${id}`).update(updates).then(() => {                       
+    return (dispatch, getState) => {
+        const uid = getState().auth.uid;
+        return database.ref(`user/${uid}/expenses/${id}`).update(updates).then(() => {                       
             dispatch(editExpense(id, updates));
         });
     };
@@ -77,11 +81,12 @@ export const setExpenses = (expenses) => ({
 // the code inside the return will save data to firebase & afterwards 
 // firebase dispatch to start setExpenses so the data is reflected what is in firebase
 export const startSetExpenses = () => {
-    return (dispatch) => { 
+    return (dispatch, getState) => {
+        const uid = getState().auth.uid; // get user ID from state
         // 'then' returns a snapshot, so we can get the id from it. 
         // then spread the rest of the properties that comes back
         // the return helps to chain another then promise to it in the test file       
-        return database.ref('expenses').once('value').then((snapshot) => {
+        return database.ref(`user/${uid}/expenses`).once('value').then((snapshot) => {
         const expenses = []; // array to accept data from the object list
         
         // childSnapshot can be called anything. snapshot is called once for each child (expense)

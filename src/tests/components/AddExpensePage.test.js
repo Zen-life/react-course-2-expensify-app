@@ -17,6 +17,6 @@ test('should render Add Expense Page correctly', () => {
 
 test('should handle onsubmit', () => {
     wrapper.find('ExpenseForm').prop('onSubmit')(expenses[1]); // () calling with data that gets passed.
-    expect(history.push).toHaveBeenLastCalledWith('/'); // now if history.push path alters in AddExpensePage, test will fail 
+    expect(history.push).toHaveBeenLastCalledWith('/dashboard'); // now if history.push path alters in AddExpensePage, test will fail 
     expect(startAddExpense).toHaveBeenLastCalledWith(expenses[1]); // called with data parsed onSubmit above
 });
