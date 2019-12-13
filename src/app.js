@@ -40,7 +40,7 @@ const renderApp = () => {
 ReactDOM.render(<p>Loading...</p>, document.getElementById('app'));
 
 // onAuthStateChanged() takes a callback function, which runs when the auth status change.
-// when user goes fron unauth to authenticate or the reverse.
+// when user goes fron unauth to authenticated or the reverse.
 firebase.auth().onAuthStateChanged((user) => {
     // if there is user, then, they just logged in, else no user, they've logged out
     if (user) {

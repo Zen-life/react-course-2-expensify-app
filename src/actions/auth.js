@@ -7,13 +7,13 @@ export const login = (uid) => ({
 });
 
 // we create the googleAuthProvider and we parse in to a function
+// inside the isth return, we trying to call a firebase related method
+// we use return again for the Promise chain, so other chain can be attached
+// signInWithPopup() takes the Provider as its only argument
+// it allows us to display a popup for the user to sign in using the google
+// provider service authentication ie. a google account details.
 export const startLogin = () => {
     return () => {
-        // inside here, we trying to call a firebase related method
-        // we use return again for the Promise chain, so other chain can be attached
-        // signInWithPopup() takes the Provider as its only argument
-        // it allows us to display a popup for the user to sign in using the google
-        // provider service authentication ie. a google account details.
         return firebase.auth().signInWithPopup(googleAuthProvider);
 
     };
