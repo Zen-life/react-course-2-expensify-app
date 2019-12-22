@@ -1,11 +1,17 @@
+* {
+    box-sizing: border-box;
+}
+
 html {
     font-size: 62.5%;
 }
 
 body {
+    columns: $dark-grey;
     background: #ffffff;
     font-family: Helvetica, Arial, sans-serif;
     font-size: $m-size; /* 1.6rem eq to 16px due to 1rem eq 16px. 16*.625 conv to base 10*/
+    line-height: 1.6;
 }
 
 button {

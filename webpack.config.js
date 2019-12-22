@@ -20,7 +20,7 @@ module.exports = (env) => {
     const CSSExtract = new ExtractTextPlugin('styles.css'); // name of the css file parsed
 
     return {
-        entry: './src/app.js',
+        entry: ['babel-polyfill', './src/app.js'],
         // entry: './src/playground/hoc.js', // this for testing separate files
         // __dirname, follows folder name e.g. public, dist eqv to public/dist
         output: {

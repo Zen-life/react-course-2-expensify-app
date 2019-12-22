@@ -10,7 +10,7 @@ import 'normalize.css/normalize.css';
 import './styles/styles.scss';
 import 'react-dates/lib/css/_datepicker.css';
 import { firebase } from './firebase/firebase';
-
+import LoadingPage from './components/LoadingPage';
 
 
 // the 'const store' has been set up to the configureStore func imported above, 
@@ -37,7 +37,7 @@ const renderApp = () => {
     };
 };
 
-ReactDOM.render(<p>Loading...</p>, document.getElementById('app'));
+ReactDOM.render(<LoadingPage />, document.getElementById('app'));
 
 // onAuthStateChanged() takes a callback function, which runs when the auth status change.
 // when user goes fron unauth to authenticated or the reverse.
@@ -59,6 +59,6 @@ firebase.auth().onAuthStateChanged((user) => {
         history.push('/');
     }
 
-}); 
+});
 
 

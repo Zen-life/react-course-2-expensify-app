@@ -1,0 +1,12 @@
+.show-for-mobile {
+    @media (min-width: $desktop-breakpoint) {
+        display: none;
+    }
+}
+
+/* subtracting numb .01rem below, ensure both class do not show at same time */
+.show-for-desktop {
+    @media (max-width: $desktop-breakpoint - .01rem) {
+        display: none;
+    }
+}
