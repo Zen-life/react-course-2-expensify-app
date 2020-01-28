@@ -11,8 +11,13 @@ export class EditExpensePage extends React.Component {
     };
 
     onRemove = () => {
-        this.props.startRemoveExpense({ id: this.props.expense.id });
-        this.props.history.push('/dashboard');
+        const onConfirm = confirm('You are about to delete this expense. Are you sure?');
+        console.log('onConfirm:', onConfirm);
+        
+        if(onConfirm === true) {
+            this.props.startRemoveExpense({ id: this.props.expense.id });
+            this.props.history.push('/dashboard');
+        }
     };
     render() {
         return (
