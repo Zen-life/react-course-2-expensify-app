@@ -7,13 +7,15 @@ import numeral from 'numeral';
 
 // same as below but destructured here
 // parse createdAt to moment and set format. amount to numeral
+// numeral.format('$0,0.00') has '$', as it is required to show currency symbol... 
+// But locale in ExpensesSummary has been set to '£', so the browser will show '£'
 const ExpenseListItem = ({description, amount, createdAt, id}) => (
     <Link className="list-item" to={`/edit/${id}`}>
         <div>
             <h3 className="list-item__title">{description}</h3>
             <span className="list-item__sub-title"> {moment(createdAt).format('MMMM Do, YYYY')}</span>
         </div>
-        <h3 className="list-ite,__data">{numeral(amount / 100).format('0,0.00')}</h3> 
+        <h3 className="list-ite,__data">{numeral(amount / 100).format('$0,0.00')}</h3> 
     </Link>
 );
 

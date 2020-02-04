@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import numeral from 'numeral';
+import '../locales/en-gb';
 import SelectExpenses from '../selectors/expenses';
 import selectExpensesTotal from '../selectors/expenses-total';
 
@@ -9,6 +10,11 @@ import selectExpensesTotal from '../selectors/expenses-total';
 // destructured these variables: expenseCount, expensesTotal
 export const ExpensesSummary = ({expenseCount, expensesTotal}) => {
     const expenseWord = expenseCount <= 1 ? 'expense' : 'expenses';
+
+    numeral.locale('en-gb');
+    numeral.defaultFormat('$0,0.00');
+    
+    // console.log('locales:', locales);
     const formattedExpensesTotal = numeral(expensesTotal / 100).format('$0,0.00');
 
     return(

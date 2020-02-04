@@ -30,6 +30,7 @@ export class ExpenseListFilters extends React.Component {
     render() {
         return (
             <div className="content-container">
+                <div className="input-header">Filters</div>
                 <div className="input-group">
                     <div className="input-group__item">
                         <input type="text"

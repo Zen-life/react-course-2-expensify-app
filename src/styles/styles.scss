@@ -1,5 +1,6 @@
 @import './base/settings';
 @import './base/base';
+@import './base/alertify.core';
 @import './components/box-layout';
 @import './components/button';
 @import './components/header';
@@ -11,3 +12,4 @@
 @import './components/visibility';
 @import './components/list.scss';
 @import './components/loader';
+@import './components/alertify.custom';

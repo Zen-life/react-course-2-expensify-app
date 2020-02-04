@@ -11,14 +11,16 @@ export class EditExpensePage extends React.Component {
     };
 
     onRemove = () => {
-        const onConfirm = confirm('You are about to delete this expense. Are you sure?');
-        console.log('onConfirm:', onConfirm);
-        
-        if(onConfirm === true) {
-            this.props.startRemoveExpense({ id: this.props.expense.id });
-            this.props.history.push('/dashboard');
-        }
+        // using alertify confiirm box         
+        alertify.confirm("You are about to delete this expense. Are you sure?", (e) => {             
+            if (e) {
+                this.props.startRemoveExpense({ id: this.props.expense.id });
+                this.props.history.push('/dashboard');
+                alertify.alert("The expense has been deleted!");                
+            }              
+        });
     };
+
     render() {
         return (
             <div> 
@@ -42,8 +44,8 @@ export class EditExpensePage extends React.Component {
 
 
 
-// we need to search for expenses whose id match 'props.match.params.id'
-// to access the details we need access to props, hence the 2nd props arg below
+// search for expense whose id match 'props.match.params.id'
+// to access the details we need access to props, hence props.match..
 const mapStateToProps = (state, props) => {
     return {
         expense: state.expenses.find((expense) => expense.id === props.match.params.id)        
@@ -53,13 +55,11 @@ const mapStateToProps = (state, props) => {
 
     // the goal is to return an object
     // inside return, we can define various props to call dispatch
-    // the props is required (according to Insctructor) to pass data returned by the Object in the startRemoveExpense() above
-    // Although my test showed it works fine without the passing id and expense.
+    // the props is required to pass data returned by the Object in e.g. startRemoveExpense() above
 const mapDispatchToProps = (dispatch, props) => ({
     startEditExpense: (id, expense) => dispatch(startEditExpense(id, expense)),
     startRemoveExpense: (data) => dispatch(startRemoveExpense(data))
 });
-
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditExpensePage);

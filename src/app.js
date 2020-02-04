@@ -6,7 +6,7 @@ import configureStore from './store/configureStore';
 import { startSetExpenses } from './actions/expenses';
 import { login, logout } from './actions/auth';
 import getVisibleExpenses from './selectors/expenses';
-import 'normalize.css/normalize.css';
+import 'normalize.css/normalize.css'; // switch off default or bespoke browser settings
 import './styles/styles.scss';
 import 'react-dates/lib/css/_datepicker.css';
 import { firebase } from './firebase/firebase';
